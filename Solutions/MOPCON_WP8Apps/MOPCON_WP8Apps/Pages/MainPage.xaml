@@ -35,7 +35,7 @@
         <!--Panorama 控制項-->
         <controls:Panorama x:Name="Pano">
             <controls:Panorama.Title>
-                <TextBlock Text="MOPCON 2013" Margin="0,25,0,0" FontSize="160"/>
+                <TextBlock Text="MOPCON 2014" Margin="0,25,0,0" FontSize="160"/>
             </controls:Panorama.Title>
             <controls:Panorama.Background>
                 <ImageBrush ImageSource="/Assets/Images/PanoramaBackground.png"/>
