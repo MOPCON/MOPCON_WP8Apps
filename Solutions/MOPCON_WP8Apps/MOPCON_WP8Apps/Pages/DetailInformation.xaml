@@ -1,0 +1,113 @@
+﻿<phone:PhoneApplicationPage
+    x:Class="MOPCON_WP8Apps.DetailInformation"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:phone="clr-namespace:Microsoft.Phone.Controls;assembly=Microsoft.Phone"
+    xmlns:shell="clr-namespace:Microsoft.Phone.Shell;assembly=Microsoft.Phone"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    FontFamily="{StaticResource PhoneFontFamilyNormal}"
+    FontSize="{StaticResource PhoneFontSizeNormal}"
+    Foreground="{StaticResource PhoneForegroundBrush}"
+    SupportedOrientations="Portrait" Orientation="Portrait"
+    mc:Ignorable="d"
+    shell:SystemTray.IsVisible="False">
+
+    <!--LayoutRoot 是放置所有頁面的根資料格-->
+    <Grid x:Name="LayoutRoot" d:DataContext="{d:DesignData /SampleData/SessionSampleData.xaml}">
+        <Grid.Background>
+            <ImageBrush Stretch="Fill" ImageSource="/Assets/Images/Detail.png"/>
+        </Grid.Background>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+
+        <!--TitlePanel 包含應用程式的名稱和頁面標題-->
+        <StackPanel Grid.Row="0" Margin="12,17,0,28">
+            <ScrollViewer HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Disabled">
+                <TextBlock Text="議程資料" Margin="9,-7,0,0" Style="{StaticResource PhoneTextTitle1Style}"/>
+            </ScrollViewer>
+        </StackPanel>
+
+        <!--ContentPanel - 其他內容置於此-->
+        <Grid x:Name="ContentPanel" Grid.Row="1" Margin="12,0,12,0">
+            <ScrollViewer>
+                <StackPanel>
+                    <Grid Margin="0,0,0,20">
+                        <Rectangle Fill="{Binding Source={StaticResource FontColor2}}" Opacity="{Binding Source={StaticResource DataItemBackgroundOpacity}}"/>
+                        <StackPanel>
+                            <TextBlock Text="議程名稱" Foreground="{Binding Source={StaticResource FontColor1}}" FontSize="24" />
+                            <TextBlock Text="{Binding name}"
+                           FontSize="30" TextWrapping="Wrap" Margin="0,0,0,20" Foreground="{Binding Source={StaticResource FontColor1}}"/>
+                        </StackPanel>
+                    </Grid>
+
+                    <Grid Margin="0,0,0,20">
+                        <Rectangle Fill="{Binding Source={StaticResource FontColor2}}" Opacity="{Binding Source={StaticResource DataItemBackgroundOpacity}}"/>
+                        <StackPanel>
+                            <TextBlock Text="議程內容"  Foreground="{Binding Source={StaticResource FontColor1}}" FontSize="24"/>
+                            <TextBlock Text="{Binding content}"
+                           FontSize="30" TextWrapping="Wrap" Margin="0,0,0,20" Foreground="{Binding Source={StaticResource FontColor1}}"/>
+                        </StackPanel>
+                    </Grid>
+
+                    <Grid Margin="0,0,0,20">
+                        <Rectangle Fill="{Binding Source={StaticResource FontColor2}}" Opacity="{Binding Source={StaticResource DataItemBackgroundOpacity}}"/>
+                        <StackPanel>
+                            <TextBlock Text="講者" Foreground="{Binding Source={StaticResource FontColor1}}" FontSize="24"/>
+                            <TextBlock Text="{Binding speaker}"
+                           FontSize="30" TextWrapping="Wrap" Margin="0,0,0,20" Foreground="{Binding Source={StaticResource FontColor1}}"/>
+                        </StackPanel>
+                    </Grid>
+
+                    <Grid Margin="0,0,0,20">
+                        <Rectangle Fill="{Binding Source={StaticResource FontColor2}}" Opacity="{Binding Source={StaticResource DataItemBackgroundOpacity}}"/>
+                        <StackPanel>
+                            <TextBlock Text="講者資訊" Foreground="{Binding Source={StaticResource FontColor1}}" FontSize="24"/>
+                            <TextBlock Text="{Binding speaker_bio}"
+                           FontSize="30" TextWrapping="Wrap" Margin="0,0,0,20" Foreground="{Binding Source={StaticResource FontColor1}}"/>
+                        </StackPanel>
+                    </Grid>
+
+                    <Grid Margin="0,0,0,20">
+                        <Rectangle Fill="{Binding Source={StaticResource FontColor2}}" Opacity="{Binding Source={StaticResource DataItemBackgroundOpacity}}"/>
+                        <StackPanel>
+                            <TextBlock Text="地點" Foreground="{Binding Source={StaticResource FontColor1}}" FontSize="24"/>
+                            <TextBlock Text="{Binding loc}"
+                           FontSize="30" TextWrapping="Wrap" Margin="0,0,0,20" Foreground="{Binding Source={StaticResource FontColor1}}"/>
+                        </StackPanel>
+                    </Grid>
+
+                    <Grid Margin="0,0,0,20">
+                        <Rectangle Fill="{Binding Source={StaticResource FontColor2}}" Opacity="{Binding Source={StaticResource DataItemBackgroundOpacity}}"/>
+                        <StackPanel>
+                            <TextBlock Text="開始時間" Foreground="{Binding Source={StaticResource FontColor1}}" FontSize="24"/>
+                            <TextBlock Text="{Binding start_time}"
+                           FontSize="30" TextWrapping="Wrap" Margin="0,0,0,20" Foreground="{Binding Source={StaticResource FontColor1}}"/>
+                        </StackPanel>
+                    </Grid>
+
+                    <Grid Margin="0,0,0,20">
+                        <Rectangle Fill="{Binding Source={StaticResource FontColor2}}" Opacity="{Binding Source={StaticResource DataItemBackgroundOpacity}}"/>
+                        <StackPanel>
+                            <TextBlock Text="開始時間" Foreground="{Binding Source={StaticResource FontColor1}}" FontSize="24"/>
+                            <TextBlock Text="{Binding end_time}"
+                           FontSize="30" TextWrapping="Wrap" Margin="0,0,0,20" Foreground="{Binding Source={StaticResource FontColor1}}"/>
+                        </StackPanel>
+                    </Grid>
+
+                </StackPanel>
+            </ScrollViewer>
+        </Grid>
+    </Grid>
+
+    <!--顯示 ApplicationBar 使用方式的程式碼範例-->
+    <phone:PhoneApplicationPage.ApplicationBar>
+        <shell:ApplicationBar IsVisible="True" IsMenuEnabled="True">
+            <shell:ApplicationBarIconButton IconUri="/Assets/Icons/AddFav.png" Text="儲存最愛" Click="appBtnAdd_Click" IsEnabled="True" />
+            <shell:ApplicationBarIconButton IconUri="/Assets/Icons/Pin.png" Text="釘選" Click="appBtnPin_Click" IsEnabled="True" />
+        </shell:ApplicationBar>
+    </phone:PhoneApplicationPage.ApplicationBar>
+
+</phone:PhoneApplicationPage>

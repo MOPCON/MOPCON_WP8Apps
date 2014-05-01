@@ -1,0 +1,59 @@
+﻿<local:MainViewModel 
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"       
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="clr-namespace:MOPCON_WP8Apps" 
+    SampleProperty="Sample Text Property Value">
+
+    <local:MainViewModel.Items>
+        <local:ItemViewModel  
+            LineOne = "小貓咪飼養介紹"
+            LineTwo = "愛貓人士"
+            LineThree = "403 會議室" 
+            LineFour = "/Assets/Images/01.png">
+            <local:ItemViewModel.Children>
+                <local:ItemViewModel 
+				LineOne = "小貓咪飼養介紹"
+                LineTwo = "愛貓人士"
+                LineThree = "403 會議室" 
+                LineFour = "/Assets/Images/01.png"/>
+                <local:ItemViewModel 
+				LineOne = "小貓咪飼養介紹"
+                LineTwo = "愛貓人士"
+                LineThree = "403 會議室" 
+                LineFour = "/Assets/Images/01.png"/>
+                <local:ItemViewModel 
+				LineOne = "小貓咪飼養介紹"
+                LineTwo = "愛貓人士"
+                LineThree = "403 會議室" 
+                LineFour = "/Assets/Images/01.png"/>
+            </local:ItemViewModel.Children>
+        </local:ItemViewModel>
+    <local:ItemViewModel  
+            LineOne = "小狗狗飼養介紹"
+            LineTwo = "愛狗人士"
+            LineThree = "404 會議室" 
+            LineFour = "/Assets/Images/01.png"/>
+        
+        <local:ItemViewModel  
+            LineOne = "Open is the new norm."
+            LineTwo = "程世嘉 Sega Cheng"
+            LineThree = "404 會議室" 
+            LineFour = "/Assets/Images/01.png"/>
+        <local:ItemViewModel  
+            LineOne = "Mikimoto假面的告白"
+            LineTwo = "Mikimoto"
+            LineThree = "企業號儲藏室" 
+            LineFour = "/Assets/Images/01.png"
+            />
+        <local:ItemViewModel  
+            LineOne = "Mikimotoo與娜美"
+                LineTwo = "Mikimoto"
+                LineThree = "企業號艦橋"
+                LineFour = "/Assets/Images/01.png"/>
+        <local:ItemViewModel  
+            LineOne = "Mikimotoo與涼宮春日的浪漫夏天"
+                LineTwo = "Mikimoto"
+                LineThree = "企業號輪機室" LineFour = "/Assets/Images/01.png"/>
+    </local:MainViewModel.Items>
+
+</local:MainViewModel>
