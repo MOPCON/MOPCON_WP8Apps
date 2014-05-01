@@ -12,6 +12,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Resources;
 using MOPCON_WP8Apps.Helpers;
+using System.Net.Http;
 
 namespace MOPCON_WP8Apps.DataModels
 {
@@ -283,50 +284,131 @@ namespace MOPCON_WP8Apps.DataModels
                 return;
             }
 
-            using (var response = await HttpWebRequest.CreateHttp(internetUri).GetResponseAsync())
+            ManagerResult mr = new ManagerResult();
+
+            HttpClient webClient = new HttpClient();
+            webClient = new HttpClient();
+
+            MultipartFormDataContent form = new MultipartFormDataContent();
+
+            UriBuilder ub = new UriBuilder(MainHelp.APIUrlSession);
+            try
             {
-                using (var stream = response.GetResponseStream())
+                HttpResponseMessage response = await webClient.GetAsync(ub.Uri);
+                if (response != null)
                 {
-                    using (var isolatedStorageFile = IsolatedStorageFile.GetUserStoreForApplication())
+                    if (response.StatusCode != HttpStatusCode.OK)
                     {
-                        if (isolatedStorageFile.DirectoryExists(folderName) == false)
+                    }
+                    else if (response.StatusCode == HttpStatusCode.OK)
+                    {
+                        var stream = await response.Content.ReadAsStreamAsync();
                         {
-                            isolatedStorageFile.CreateDirectory(folderName);
-                            fullFilename = string.Format("{0}/{1}", folderName, uniqueName);
-                        }
-                        else
-                        {
-                            fullFilename = string.Format("{0}", uniqueName);
-                        }
-
-                        if (isolatedStorageFile.FileExists(fullFilename))
-                        {
-                            isolatedStorageFile.DeleteFile(fullFilename);
-                        }
-
-                        using (IsolatedStorageFileStream fileStream = new IsolatedStorageFileStream(fullFilename, FileMode.Create, isolatedStorageFile))
-                        {
-                            using (BinaryWriter writer = new BinaryWriter(fileStream))
+                            using (var isolatedStorageFile = IsolatedStorageFile.GetUserStoreForApplication())
                             {
-                                long length = stream.Length;
-                                byte[] buffer = new byte[32];
-                                int readCount = 0;
-                                using (BinaryReader reader = new BinaryReader(stream))
+                                if (isolatedStorageFile.DirectoryExists(folderName) == false)
                                 {
-                                    // read file in chunks in order to reduce memory consumption and increase performance
-                                    while (readCount < length)
+                                    isolatedStorageFile.CreateDirectory(folderName);
+                                    fullFilename = string.Format("{0}/{1}", folderName, uniqueName);
+                                }
+                                else
+                                {
+                                    fullFilename = string.Format("{0}", uniqueName);
+                                }
+
+                                if (isolatedStorageFile.FileExists(fullFilename))
+                                {
+                                    isolatedStorageFile.DeleteFile(fullFilename);
+                                }
+
+                                using (IsolatedStorageFileStream fileStream = new IsolatedStorageFileStream(fullFilename, FileMode.Create, isolatedStorageFile))
+                                {
+                                    using (BinaryWriter writer = new BinaryWriter(fileStream))
                                     {
-                                        int actual = reader.Read(buffer, 0, buffer.Length);
-                                        readCount += actual;
-                                        writer.Write(buffer, 0, actual);
+                                        long length = stream.Length;
+                                        byte[] buffer = new byte[32];
+                                        int readCount = 0;
+                                        using (BinaryReader reader = new BinaryReader(stream))
+                                        {
+                                            // read file in chunks in order to reduce memory consumption and increase performance
+                                            while (readCount < length)
+                                            {
+                                                int actual = reader.Read(buffer, 0, buffer.Length);
+                                                readCount += actual;
+                                                writer.Write(buffer, 0, actual);
+                                            }
+                                            writer.Flush();
+                                        }
                                     }
-                                    writer.Flush();
                                 }
                             }
                         }
                     }
                 }
+                else
+                {
+                    mr.Exception = new Exception(MainHelp.APIInternalError);
+                    mr.Message = string.Format("系統內部發生錯誤:{0}", MainHelp.APIInternalError);
+                }
             }
+            catch (Exception ex)
+            {
+                mr.Exception = ex;
+                mr.Message = string.Format("系統發生異常錯誤:{0}", ex.Message.ToString());
+            }
+
+
+
+
+
+
+
+
+            
+            //using (var response = await HttpWebRequest.CreateHttp(internetUri).GetResponseAsync())
+            //{
+            //    using (var stream = response.GetResponseStream())
+            //    {
+            //        using (var isolatedStorageFile = IsolatedStorageFile.GetUserStoreForApplication())
+            //        {
+            //            if (isolatedStorageFile.DirectoryExists(folderName) == false)
+            //            {
+            //                isolatedStorageFile.CreateDirectory(folderName);
+            //                fullFilename = string.Format("{0}/{1}", folderName, uniqueName);
+            //            }
+            //            else
+            //            {
+            //                fullFilename = string.Format("{0}", uniqueName);
+            //            }
+
+            //            if (isolatedStorageFile.FileExists(fullFilename))
+            //            {
+            //                isolatedStorageFile.DeleteFile(fullFilename);
+            //            }
+
+            //            using (IsolatedStorageFileStream fileStream = new IsolatedStorageFileStream(fullFilename, FileMode.Create, isolatedStorageFile))
+            //            {
+            //                using (BinaryWriter writer = new BinaryWriter(fileStream))
+            //                {
+            //                    long length = stream.Length;
+            //                    byte[] buffer = new byte[32];
+            //                    int readCount = 0;
+            //                    using (BinaryReader reader = new BinaryReader(stream))
+            //                    {
+            //                        // read file in chunks in order to reduce memory consumption and increase performance
+            //                        while (readCount < length)
+            //                        {
+            //                            int actual = reader.Read(buffer, 0, buffer.Length);
+            //                            readCount += actual;
+            //                            writer.Write(buffer, 0, actual);
+            //                        }
+            //                        writer.Flush();
+            //                    }
+            //                }
+            //            }
+            //        }
+            //    }
+            //}
         }
 
         public void Dispose()
